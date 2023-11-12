@@ -49,7 +49,9 @@ const Header = () => {
                 <div className="headerSearchBar">
                     <div className="SearchBarItem ">
                         <FontAwesomeIcon icon={faBed} />
-                        <input type="search" placeholder="Where are you going?" className='searchInput'/>
+                        <input type="search" placeholder="Where are you going?" className='searchInput' onChange={(e) => {
+                            setDestination(e.target.value)
+                        }}/>
 
                     </div>
                     <div className="SearchBarItem ">
@@ -73,8 +75,6 @@ const Header = () => {
                             //就可以用到上面的import * as locales from 'react-date-range/dist/locale';
 
                                                     />}
-
-
                     </div>
                     <div className="SearchBarItem">
                         <FontAwesomeIcon icon={faPeopleGroup} onClick={ ()=> setOpenConditions(!openConditions)}/>
