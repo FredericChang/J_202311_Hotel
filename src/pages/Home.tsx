@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import Announcement from "../components/Announcement";
 import Feature from "../components/Feature";
+import Footer from "../components/Footer";
 
 const array = [
     {id: 0, name: "飯店"},
@@ -22,9 +23,10 @@ const Home = () => {
             <h1>Home</h1>
             <Navbar/>
             <Header/>
-            <Announcement/>
+            <Announcement type={"Upper half"}/>
             <Feature/>
-
+            <Announcement type={"lower half"}/>
+            <Footer/>
         </div>
     )
 }

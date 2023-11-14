@@ -1,6 +1,6 @@
 .categories {
-  width: 100%;
-  height: auto;
+  display: flex;
+  gap: 10px;//新增的
   .item {
     img {
       border-radius: 2px;
