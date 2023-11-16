@@ -6,8 +6,12 @@ import { format } from 'date-fns'
 import * as locales from 'react-date-range/dist/locale';
 import {useState} from "react";
 import SearchItem from "../components/SearchItem";
+import {useLocation} from "react-router-dom";
+
 
 const HotelsList = () => {
+    const location = useLocation();
+    console.log(location);
     const [openConditions, setOpenConditions] = React.useState(false)
     const [openCalendar, setOpenCalendar] = useState(false);
     const [dates, setDates] = useState([

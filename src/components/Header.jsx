@@ -8,8 +8,10 @@ import * as locales from 'react-date-range/dist/locale';
 import format from 'date-fns/format';
 import { DateRange } from 'react-date-range';
 import "./header.scss"
+import {useNavigate} from "react-router-dom";
 
 const Header = () => {
+    const navigate =useNavigate();
     const [ openConditions, setOpenConditions ] = React.useState(false);
     const [ openCalendar, setOpenCalendar ] = React.useState(false);
     const [dates, setdates] = React.useState([ {
@@ -24,6 +26,10 @@ const Header = () => {
         rooms: 1
     });
 
+    const handleSearchBarSubmit = () => {
+        navigate("/hotelsList",{state:{destination,dates,conditions}})
+
+    }
 
     const handleCounter = (name, sign) => {
 
@@ -113,7 +119,7 @@ const Header = () => {
                             </div>
                         }
                     </div>
-                    <button className='SearchBarBtn'>Search</button>
+                    <button className='SearchBarBtn' onClick={handleSearchBarSubmit}>Search</button>
                 </div>
 
             </div>

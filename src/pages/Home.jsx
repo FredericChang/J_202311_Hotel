@@ -4,6 +4,9 @@ import Header from "../components/Header";
 import Announcement from "../components/Announcement";
 import Feature from "../components/Feature";
 import Footer from "../components/Footer";
+import { useNavigate } from 'react-router-dom';
+import {Link} from "react-router-dom"
+import "./home.scss"
 
 const array = [
     {id: 0, name: "飯店"},

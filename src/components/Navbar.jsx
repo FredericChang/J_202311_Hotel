@@ -2,13 +2,19 @@ import React from 'react'
 import "./navbar.scss"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBed, faCar, faPlane, faTaxi, faToriiGate } from '@fortawesome/free-solid-svg-icons'
+import {Link} from "react-router-dom"
+import { useNavigate } from 'react-router-dom';
+
+
 const Navbar = () => {
     return (
         <div className='navbar'>
             <div className="navbarContainer">
                 <div className="lineOne">
                     <div className="left">
-                        <span className="logo">SAM.BOOKING</span>
+                        <Link to="/" style={{ color: "inherit",  textDecoration: "none"}}>
+                            <span className="logo">SAM.BOOKING</span>
+                        </Link>
                     </div>
                     <div className="right">
                         <button className='navButtonFlag'/>
