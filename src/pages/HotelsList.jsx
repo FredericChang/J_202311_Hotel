@@ -10,24 +10,27 @@ import {useLocation} from "react-router-dom";
 
 
 const HotelsList = () => {
-    const location = useLocation();
-    console.log(location);
-    const [openConditions, setOpenConditions] = React.useState(false)
+    const locationSearchBarData = useLocation();
+    // console.log(locationSearchBarData);
+    const [openConditions, setOpenConditions] = React.useState()
     const [openCalendar, setOpenCalendar] = useState(false);
-    const [dates, setDates] = useState([
-        {
-            startDate: new Date(),
-            endDate: new Date(),
-            key: 'selection',
-        }
-    ]);
-    const [conditions, setConditions] = useState(
-        {
-            adult: 1, //初始人數,房間數為一
-            children: 0, //可以不一定要有小孩
-            room: 1,
-        }
-    );
+    const [ destination, setDestination ] = useState(locationSearchBarData.state?.destination);
+    const [dates, setDates] =useState(locationSearchBarData.state?.dates);
+    const [conditions, setConditions] = useState( locationSearchBarData.state?.conditions);
+    // const [dates, setDates] = useState([
+    //     {
+    //         startDate: new Date(),
+    //         endDate: new Date(),
+    //         key: 'selection',
+    //     }
+    // ]);
+    // const [conditions, setConditions] = useState(
+    //     {
+    //         adult: 1, //初始人數,房間數為一
+    //         children: 0, //可以不一定要有小孩
+    //         room: 1,
+    //     }
+    // );
     return (
         <>
          <div>
@@ -40,7 +43,11 @@ const HotelsList = () => {
                         </div>
                          <div className="listItem">
                              <lable>目的地／住宿名稱：</lable>
-                             <input type="text" className="searchInput" placeholder='要去哪裡?'/>
+                             <input type="text" className="searchInput"
+                                    placeholder={destination === "" ? '要去哪裡?' : destination}
+                                    onChange={(e) => {setDestination(e.target.value)
+                                }}
+                             />
                          </div>
                          <div className="listItem">
 
@@ -71,7 +78,10 @@ const HotelsList = () => {
                                  <input type="text" className='searchInput' />
                              </div>
                              <div className="listItmConditions">
-                                 <span className="SearchText" >3 位成人 · 2 位小孩· 1 間房</span>
+                                 <span className="SearchText" onClick={()=>{
+                                        setOpenConditions(!openConditions)
+
+                                 }}>{conditions.adult}位成人 · {conditions.children}位小孩· {conditions.rooms}間房</span>
 
                          </div>
                          <div className="listItem">
