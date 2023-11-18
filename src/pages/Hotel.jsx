@@ -1,10 +1,19 @@
-import React from "react";
-import { faClipboardCheck, faHeartCircleCheck, faLocationDot, faPeopleGroup, faSmokingBan, faWifi } from '@fortawesome/free-solid-svg-icons';
+import { faClipboardCheck, faXmark,faAngleLeft, faAngleRight,faHeartCircleCheck, faLocationDot, faPeopleGroup, faSmokingBan, faWifi } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import React, { useRef, useState } from 'react'
+import Footer from '../components/Footer';
+import Navbar from '../components/Navbar'
+import { gsap } from "gsap";
 import "./hotel.scss"
 const Hotel = () => {
+
+    let comments = useRef(null);
+    const [openSlider, setOpenSlider] = React.useState(false);
+    const [sliderIndex, setSiderIndex] = useState(0);
+    const clickSlider = (index) => {
+        setSiderIndex(index);
+        setOpenSlider(true);
+    }
     const photos = [
         {
             src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707778.jpg?k=56ba0babbcbbfeb3d3e911728831dcbc390ed2cb16c51d88159f82bf751d04c6&o=&hp=1",
@@ -31,9 +40,47 @@ const Hotel = () => {
             src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707389.jpg?k=52156673f9eb6d5d99d3eed9386491a0465ce6f3b995f005ac71abc192dd5827&o=&hp=1",
         },
     ];
+
+    const handleHover = e => {
+        gsap.to(comments, {
+            css: {
+                display: "flex",
+                opacity: 1,
+            },
+            ease: "power3.inOut"
+        })
+    }
+    //離開特效
+    const handleHoverExit = e => {
+        gsap.to(comments, {
+            css: {
+                display: "none",
+                opacity: 0,
+            },
+            ease: "power3.inOut"
+
+        })
+    }
     return (
-        <div className="hotel">
-            <Navbar/>
+        <div className='hotel'>
+            <Navbar />
+            {openSlider &&
+                <div className="slider">
+                    <div className="sliderWrapper">
+                        <div className="wrapperTitle">
+                            <div className='TitleName'>台南微醺文旅</div>
+                            <span className="CloseSign" onClick={()=> setOpenSlider(false)}>關閉
+                            <FontAwesomeIcon icon={faXmark}   /></span>
+                        </div>
+                        <div className="wrapperBody">
+                            <FontAwesomeIcon icon={faAngleLeft} className="arrow"  />
+                            <img src={photos[0].src} alt="" />
+                            <FontAwesomeIcon icon={faAngleRight} className="arrow" />
+                        </div>
+                    </div>
+                </div>
+            }
+
             <div className="HotelContainer">
                 <div className="HotelWrapper">
                     <div className="HotelHeaderBtn">
@@ -42,7 +89,8 @@ const Hotel = () => {
                         <button>訂房須知</button>
                         <button>房客評價</button>
                     </div>
-                    <div className="hotelTitle">
+
+                    <div className="title">
                         <div className="titleLeft">
                             <span className="type">飯店</span>
                             <span className='hotelName'>台南微醺文旅</span>
@@ -55,30 +103,98 @@ const Hotel = () => {
                             <p> <FontAwesomeIcon icon={faHeartCircleCheck} /> <span>買貴退差價</span></p>
                         </div>
                     </div>
+
                     <div className="hotelImgWrapper">
+                        <div className="popupcomment" onMouseEnter={e => handleHover(e)} onMouseOut={e => handleHoverExit(e)} >
+                            <div className='commentInfo' onMouseEnter={e => handleHover(e)} ref={e => (comments = e)} >
+                                <button className='commentRate'>
+                                    9.5
+                                </button>
+                                傑出<br />
+                                1,223則評論
+                            </div>
+                        </div>
+
                         <div className="hotelImg">
                             {photos.slice(0, 6).map((item, i) => //不管他再怎麼多 如果剛好有到7張照片就可以觀看更多，並往上加
                                 i >= 5 ?
                                     <div className="Imgwrap" key={i}>
-                                        <div className="more"  >{photos.length > 6 ? `+${photos.length - 6}張照片` : "觀看更多"}</div>
+                                        <div className="more" onClick={()=> clickSlider(i) } >{photos.length > 6 ? `+${photos.length - 6}張照片` : "觀看更多"}</div>
                                         <img src={item.src} alt="img" />
                                     </div>
                                     :
                                     <div className="Imgwrap" key={i}>
-                                        <img src={item.src} alt="img" />
+                                        <img onClick={()=> clickSlider(i) } src={item.src} alt="img" />
                                     </div>
                             )}
                         </div>
                     </div>
+
+
                     <div className="hotelDes">
+                        <div className="hotelDesText">
+                            H& 台南微醺文旅 I老宅古城 漫遊體驗I H& tainan weshare hotel
+                            <br />
+                            <b>自 2017 年 1 月 10 日開始接待 Booking.com 的旅客入住。</b>
+                            <br />
+                            預訂H& 台南微醺文旅 I老宅古城 漫遊體驗I H& tainan weshare hotel可享 Genius 折扣！
+                            <br />只要登入，預訂此住宿即可省一筆。
+                            H& 台南微醺文旅 I老宅古城漫遊體驗I H& tainan weshare hotel 位在台南，提供 WiFi（免費）、空調、共用休息室和花園，距離台南孔廟 1.3 公里，距離赤崁樓 1.6 公里。
+                            部分房型提供附淋浴設施、拖鞋、吹風機和免費盥洗用品的私人衛浴。
+                            <br />
+                            H& 台南微醺文旅 I老宅古城漫遊體驗I H& tainan weshare hotel 附近的人氣景點包括藍晒圖文創園區、新光三越台南新天地和林百貨。最近的機場是台南機場，距離這間住宿 10 公里。
+                            此區為台南的人氣推薦區域（依據真實住客評語）
+                            獨行旅客特別喜歡這個位置－並給他們的單獨住宿體驗 9.4 分
+                            <h1>熱門設施</h1>
+                            <hr />
+                            <p className='textIcon'><FontAwesomeIcon icon={faWifi} className="wifi" />
+                                免費無線網路 <FontAwesomeIcon icon={faSmokingBan} />禁菸客房</p>
+                        </div>
+                        <div className="hotelDesPrice">
+                            <h2>住宿特色</h2>
+                            <p>入住 5 晚的最佳選擇！
+                                此住宿位於台南評分最高的地區，地理位置評分高達 9.3 分
+                                深受獨行旅客歡迎</p>
+                            <h2>TWD 6,240</h2>
+                            <button>現在就預訂</button>
+                        </div>
                     </div>
+
                 </div>
-
             </div>
-
-
             <Footer />
         </div>
+
     )
 }
-export default Hotel;
+
+export default Hotel
+
+
+
+// <div className="hotelImgWrapper">
+// <div className="popupcomment" onMouseEnter={e => handleHover(e)} onMouseOut={e => handleHoverExit(e)}>
+//   <div className='commentInfo' onMouseEnter={e => handleHover(e)} ref={e => (comments = e)}>
+//     <button className='commentRate'>
+//       9.5
+//     </button>
+//     傑出<br/>
+//     1,223則評論
+//   </div>
+// </div>
+
+// <div className="hotelImg">
+//   {photos.slice(0, 6).map((item, i) => //不管他再怎麼多 如果剛好有到7張照片就可以觀看更多，並往上加
+//     i >= 5 ?
+//       <div className="Imgwrap" key={i}>
+//         <div className="more"  >{photos.length > 6 ? `+${photos.length - 6}張照片` : "觀看更多"}</div>
+//         <img src={item.src} alt="img" />
+//       </div>
+//       :
+//       <div className="Imgwrap" key={i}>
+//         <img src={item.src} alt="img" />
+//       </div>
+//   )}
+
+// </div>
+// </div>
