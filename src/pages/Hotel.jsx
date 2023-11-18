@@ -61,6 +61,19 @@ const Hotel = () => {
 
         })
     }
+
+    const slideDirection = (direction) => {
+        let newSlideIndex;
+        let lastPicture = photos.length - 1;
+        if (direction === "left") {
+            sliderIndex == 0? newSlideIndex = lastPicture : newSlideIndex = sliderIndex - 1;
+            setSiderIndex(newSlideIndex);
+        } else {
+            sliderIndex == lastPicture? newSlideIndex = 0 : newSlideIndex = sliderIndex + 1;
+            setSiderIndex(newSlideIndex);
+        }
+    }
+
     return (
         <div className='hotel'>
             <Navbar />
@@ -73,9 +86,9 @@ const Hotel = () => {
                             <FontAwesomeIcon icon={faXmark}   /></span>
                         </div>
                         <div className="wrapperBody">
-                            <FontAwesomeIcon icon={faAngleLeft} className="arrow"  />
-                            <img src={photos[0].src} alt="" />
-                            <FontAwesomeIcon icon={faAngleRight} className="arrow" />
+                            <FontAwesomeIcon icon={faAngleLeft} className="arrow" onClick={()=>slideDirection("left")} />
+                            <img src={photos[sliderIndex].src} alt="" />
+                            <FontAwesomeIcon icon={faAngleRight} className="arrow" onClick={()=>slideDirection("right")} />
                         </div>
                     </div>
                 </div>
@@ -94,8 +107,10 @@ const Hotel = () => {
                         <div className="titleLeft">
                             <span className="type">飯店</span>
                             <span className='hotelName'>台南微醺文旅</span>
-                            <span className='recommend'><span className="recommendSvg"><FontAwesomeIcon icon={faPeopleGroup} /></span>推薦四人住宿</span>
-                            <div className="address"><FontAwesomeIcon icon={faLocationDot} /> 台南中西區No. 28 Dade Street <a>地理位置超棒－顯示地圖</a>
+                            <span className='recommend'><span className="recommendSvg">
+                                <FontAwesomeIcon icon={faPeopleGroup} /></span>推薦四人住宿</span>
+                            <div className="address">
+                                <FontAwesomeIcon icon={faLocationDot} /> 台南中西區No. 28 Dade Street <a>地理位置超棒－顯示地圖</a>
                             </div>
                         </div>
                         <div className="titleRight">
