@@ -7,7 +7,8 @@ import * as locales from 'react-date-range/dist/locale';
 import {useState} from "react";
 import SearchItem from "../components/SearchItem";
 import {useLocation} from "react-router-dom";
-
+import {Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 const HotelsList = () => {
     const locationSearchBarData = useLocation();
@@ -84,8 +85,11 @@ const HotelsList = () => {
                                  }}>{conditions.adult}位成人 · {conditions.children}位小孩· {conditions.rooms}間房</span>
 
                          </div>
+
                          <div className="listItem">
-                             <button className='searchbtn'>搜尋</button>
+                             <Link to="/hotels/imhotelrandomid123">
+                                 <button className='btn' >查看客房供應情況</button>
+                             </Link>
                          </div>
                      </div>
                      </div>
