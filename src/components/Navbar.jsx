@@ -6,9 +6,9 @@ import {Link} from "react-router-dom"
 import { useNavigate } from 'react-router-dom';
 
 
-const Navbar = () => {
+const Navbar = ({type}) => {
     return (
-        <div className='navbar'>
+        <div className={`navbar ${type}`}>
             <div className="navbarContainer">
                 <div className="lineOne">
                     <div className="left">
@@ -19,10 +19,15 @@ const Navbar = () => {
                     <div className="right">
                         <button className='navButtonFlag'/>
                         <button className="navButtonNotif">使用webpack測試</button>
-                        <button className="navButton">註冊</button>
-                        <button className="navButton">登入</button>
+                        <Link to="/register">
+                            <button className="navButton">註冊</button>
+                        </Link>
+                        <Link to="/login">
+                            <button className="navButton">登入</button>
+                        </Link>
                     </div>
                 </div>
+                {type=="auth"? <></> :
                 <div className="lineTwo">
                     <div className="item active">
                         <FontAwesomeIcon icon={faBed} />
@@ -45,7 +50,7 @@ const Navbar = () => {
                         <span >機場計程車</span>
                     </div>
                 </div>
-
+                }
             </div>
         </div>
     )
