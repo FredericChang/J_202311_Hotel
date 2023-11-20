@@ -39,10 +39,9 @@ router.put("/:id",async(req,res)=>{
     } 
  })
 
- router.delete(":/id",async(req,res) => {
+ router.delete("/:id",async(req,res) => {
     const id = req.params.id;
-    try {
-        const hotel = await Hotel.findByIdAndDelete(id)
+    try {09
         res.status(200).json("刪除成功")
     } catch (error) {
         res.status(500).json(error)
