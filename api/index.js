@@ -33,7 +33,14 @@ app.listen(port,()=>{
     //並要像npm start 一樣啟動它，
 })
 
+app.use(express.json())
 app.use("/api/v1/hotels",hotelsApiRoute)
 app.use("/api/v1/rooms",roomsApiRoute)
 app.use("/api/v1/users",usersApiRoute)
 app.use("/api/v1/auth",authApiRoute)
+
+app.use((error, req, res,next ) => {
+    const errorStatus = error.status || 500;
+    const errorMessage = error.message || "伺服器錯誤";
+
+})
