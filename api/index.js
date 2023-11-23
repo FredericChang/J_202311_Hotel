@@ -6,7 +6,6 @@ import roomsApiRoute from "./ApiRoutes/rooms.js"
 import usersApiRoute from "./ApiRoutes/users.js"
 import authApiRoute from "./ApiRoutes/auth.js"
 
-
 const app = express()
 
 dotenv.config()
@@ -39,8 +38,12 @@ app.use("/api/v1/rooms",roomsApiRoute)
 app.use("/api/v1/users",usersApiRoute)
 app.use("/api/v1/auth",authApiRoute)
 
+//如果上述ApiRoute傳接有問題可以來這邊回傳錯誤訊息
 app.use((error, req, res,next ) => {
     const errorStatus = error.status || 500;
     const errorMessage = error.message || "伺服器錯誤";
-
+    return res.status(errorStatus).json({
+        status:errorStatus,
+        message:errorMessage
+    })
 })
