@@ -5,6 +5,8 @@ import hotelsApiRoute from "./ApiRoutes/hotels.js"
 import roomsApiRoute from "./ApiRoutes/rooms.js"
 import usersApiRoute from "./ApiRoutes/users.js"
 import authApiRoute from "./ApiRoutes/auth.js"
+import cookieParser from "cookie-parser"
+
 
 const app = express()
 
@@ -32,6 +34,7 @@ app.listen(port,()=>{
     //並要像npm start 一樣啟動它，
 })
 
+app.use(cookieParser())
 app.use(express.json())
 app.use("/api/v1/hotels",hotelsApiRoute)
 app.use("/api/v1/rooms",roomsApiRoute)
