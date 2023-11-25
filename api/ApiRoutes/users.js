@@ -1,10 +1,9 @@
 import express from "express"
 
 const router = express.Router()
-//get 就像app.get 運用router把app.get可以分門別類 
-router.get("/",(req,res)=>{
-    res.send("user End points連接點")
-    console.log("這邊是hotelsApi End points連接點")
-})
 
+router.post("/:id", updateUser);
+router.delete("/:id", deleteUser);
+router.get("/:id", getUser);
+router.get("/", getAllUsers);
 export default router
