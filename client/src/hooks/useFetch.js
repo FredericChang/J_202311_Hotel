@@ -1,4 +1,4 @@
-import react, {useEffect} from "react";
+import React, { useEffect, useState } from 'react'
 import axios from "axios"
 
 const useFetch = (url) => {
@@ -12,7 +12,7 @@ const useFetch = (url) => {
             try{
                 const response = await axios.get(url);
                 //axios.get最重要的資料 且url是feature那邊傳入的/hotels
-                setData(resonse.data);
+                setData(response.data);
             }catch(error){
                 setError(error)//如果有錯誤也紀錄進去setError State
             }
@@ -26,3 +26,5 @@ const useFetch = (url) => {
         error
     }
 }
+
+export default useFetch

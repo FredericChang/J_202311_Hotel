@@ -3,7 +3,12 @@ import "./feature.scss"
 import {CategoriesCities, CategoriesType, PopularHotelsData} from "../data";
 import PostCards from "../subcomponents/PostCards";
 import PopularHotels from "../subcomponents/PopularHotels";
+
+import useFetch from '../hooks/useFetch'
 const Feature = () => {
+
+    const { data, loading, error} = useFetch("/hotels")
+    console.log(data)
 
     return (
         <div className='feature'>
@@ -31,7 +36,7 @@ const Feature = () => {
                     <h2>人氣民宿、公寓類型住宿</h2>
                 </div>
                 <div className="listItems">
-                    <PopularHotels dataArray={PopularHotelsData}/>
+                    <PopularHotels dataArray={data}/>
                 </div>
             </div>
         </div>
