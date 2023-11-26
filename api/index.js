@@ -34,19 +34,24 @@ app.listen(port,()=>{
     //並要像npm start 一樣啟動它，
 })
 
+// app.use(cors()) 
 app.use(cookieParser())
-app.use(express.json())
+app.use(express.json())//讓上傳的req.body可以視為json
+
+///middlewares中間代理商概念
 app.use("/api/v1/hotels",hotelsApiRoute)
 app.use("/api/v1/rooms",roomsApiRoute)
 app.use("/api/v1/users",usersApiRoute)
 app.use("/api/v1/auth",authApiRoute)
 
 //如果上述ApiRoute傳接有問題可以來這邊回傳錯誤訊息
-app.use((error, req, res,next ) => {
-    const errorStatus = error.status || 500;
-    const errorMessage = error.message || "伺服器錯誤";
-    return res.status(errorStatus).json({
+app.use((error,req,res, next )=>{
+    const errorStatus =error.status || 500 ;
+    const errorMessage =error.message || "中間ApiRoute出錯";
+    const errorDetail = error.detail
+    return res.status(errorStatus).json({ //return回去讓他可以被next(error) catch
         status:errorStatus,
-        message:errorMessage
+        message:errorMessage,
+        detail:errorDetail
     })
 })

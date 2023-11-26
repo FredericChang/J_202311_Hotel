@@ -8,10 +8,15 @@ router.put("/:id",verifyUser,updateUser)
 //刪除
 router.delete("/:id",verifyUser,deletedUser)
 //讀取 單一用戶資料
+// router.get("/:id",getUser)
+// //讀取全部用戶資料
+// router.get("/",getAllUsers)
+// //router.get("/",getAllUsers)
+
+//讀取 單一用戶資料
 router.get("/:id",verifyUser,getUser)
 //讀取全部用戶資料
 router.get("/",verifyAdmin,getAllUsers)
 //router.get("/",getAllUsers)
-
 
 export default router
