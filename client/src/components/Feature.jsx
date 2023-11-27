@@ -36,7 +36,7 @@ const Feature = () => {
                     <h2>人氣民宿、公寓類型住宿</h2>
                 </div>
                 <div className="listItems">
-                    <PopularHotels dataArray={data}/>
+                    <PopularHotels dataArray={data} loading={ loading }/>
                 </div>
             </div>
         </div>
