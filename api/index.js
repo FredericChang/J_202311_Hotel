@@ -6,7 +6,7 @@ import roomsApiRoute from "./ApiRoutes/rooms.js"
 import usersApiRoute from "./ApiRoutes/users.js"
 import authApiRoute from "./ApiRoutes/auth.js"
 import cookieParser from "cookie-parser"
-
+import cors from 'cors';
 
 const app = express()
 
@@ -35,6 +35,7 @@ app.listen(port,()=>{
 })
 
 // app.use(cors()) 
+app.use(cors());
 app.use(cookieParser())
 app.use(express.json())//讓上傳的req.body可以視為json
 
