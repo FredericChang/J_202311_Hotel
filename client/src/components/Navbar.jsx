@@ -1,12 +1,22 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import "./navbar.scss"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBed, faCar, faPlane, faTaxi, faToriiGate } from '@fortawesome/free-solid-svg-icons'
 import {Link} from "react-router-dom"
+import { LoginContext } from '../context/LoginContext'
+
 import { useNavigate } from 'react-router-dom';
 
 
+
 const Navbar = ({type}) => {
+
+    const {user, dispatch} = useContext(LoginContext);
+
+    const handleClick = (e) => {
+        dispatch({type: "logout"})
+    }
+
     return (
         <div className={`navbar ${type}`}>
             <div className="navbarContainer">
@@ -19,12 +29,22 @@ const Navbar = ({type}) => {
                     <div className="right">
                         <button className='navButtonFlag'/>
                         <button className="navButtonNotif">使用webpack測試</button>
-                        <Link to="/register">
-                            <button className="navButton">註冊</button>
-                        </Link>
-                        <Link to="/login">
-                            <button className="navButton">登入</button>
-                        </Link>
+                        { type == "auth" ? <></> :
+                            <>
+                                {user ?
+                                    <><span className='username'>{user.username}</span>
+                                        <button className="navButton" onClick={handleClick}>登出</button></>
+                                    : <>
+                                        <Link to="/register">
+                                            <button className="navButton">註冊</button>
+                                        </Link>
+                                        <Link to="/login">
+                                            <button className="navButton">登入</button>
+                                        </Link>
+                                    </>
+                                }
+                            </>
+                        }
                     </div>
                 </div>
                 {type=="auth"? <></> :
