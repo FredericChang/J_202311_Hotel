@@ -1,130 +1,130 @@
-import React  from "react";
-import "./header.scss"
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBed, faPeopleGroup, faCalendar} from "@fortawesome/free-solid-svg-icons"
-import 'react-date-range/dist/styles.css'; // main style file
+import { faBed, faCalendar, faPeopleGroup } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { useContext, useState } from 'react'
+import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
+import { DateRange } from 'react-date-range';
 import * as locales from 'react-date-range/dist/locale';
 import format from 'date-fns/format';
-import { DateRange } from 'react-date-range';
 import "./header.scss"
-import {useNavigate} from "react-router-dom";
-
+import { useNavigate } from 'react-router-dom';
+import { new_Options } from '../constants/actionTypes';
+import { OptionsContext } from '../context/OptionsContext';
 const Header = () => {
-    const navigate =useNavigate();
-    const [ openConditions, setOpenConditions ] = React.useState(false);
-    const [ openCalendar, setOpenCalendar ] = React.useState(false);
-    const [dates, setdates] = React.useState([ {
-        startDate: new Date(),
-        endDate: new Date(),
-        key: 'selection'
-    }]);
-    const [ destination, setDestination ] = React.useState("");
-    const [ conditions, setConditions ] = React.useState({
-        adult: 1,
-        children: 1,
-        rooms: 1
-    });
-
-    const handleSearchBarSubmit = () => {
-        navigate("/hotelsList",{state:{destination,dates,conditions}})
-
-    }
-
+    const navigate=useNavigate()
+    const { city,date,options,dispatch } = useContext(OptionsContext);
+    const [openConditions, setOpenConditions] = useState(false);
+    const [openCalendar, setOpenCalendar] = useState(false);
+    const [destination, setDestination] = useState(city);
+    const [dates, setDates] = useState([
+        {
+            startDate: new Date(),
+            endDate: new Date(),
+            key: 'selection',
+        }
+    ]);
+    const [conditions, setConditions] = useState(options);
     const handleCounter = (name, sign) => {
-
         setConditions(prev => {
-            return {
+            return{
                 ...prev,
-                [name]: sign === 'increase' ? prev[name] + 1 : prev[name] - 1
+                [name]: sign==="increase" ?  conditions[name]+1 :conditions[name]-1
             }
         })
     }
 
+    const handleSearchBarSubmit =(e)=>{
+        console.log(destination,dates,conditions)
+        dispatch({type:new_Options,payload:{city:destination,date:dates,options:conditions}})
+        navigate("/hotelsList", {state:{destination,dates,conditions}})
+    }
 
     return (
         <div className='header'>
             <div className="headerContainer">
                 <h1 className="headerTitle">
-                    Search your hotels
+                    尋找下趟住宿
                 </h1>
-                <p className="headerDes">
-                    Search Hotels, and the coupons will be automatically applied when you check out.
-                    <br/> Booking.com clone change the way you travel.
-                </p>
+                <p className="headerDes">搜尋飯店、民宿及其他住宿類型的優惠…
+                    <br />Booking.com clone挑戰（為SamKo Demo使用不為盈利）</p>
                 <div className="headerSearchBar">
-                    <div className="SearchBarItem ">
+                    <div className="SearchBarItem">
                         <FontAwesomeIcon icon={faBed} />
-                        <input type="search" placeholder="Where are you going?" className='searchInput' onChange={(e) => {
-                            setDestination(e.target.value)
-                        }}/>
-
-                    </div>
-                    <div className="SearchBarItem ">
-                        <FontAwesomeIcon icon={faCalendar} onClick={ () => setOpenCalendar(!openCalendar)}/>
-                        <span className='searchText' onClick={()=>setOpenCalendar(!openCalendar)} >
-                            {format(dates[0].startDate,"MM/dd/yyyy")} - {format(dates[0].endDate,"MM/dd/yyyy")}
-
-                        </span>
-
-                        {openCalendar && <DateRange
-                            editableDateInputs={true}//可以讓日期被選取並輸入等等的
-                            onChange={item => setdates([item.selection])}
-                            //onChange把紀錄到的改動都紀錄到state date 裡面我們暫存器就會有選好的日期範圍，等於是輸入到暫存器
-                            //item.selection的概念就是讓他選擇上傳到key=selection的部分，因為
-                            moveRangeOnFirstSelection={false}
-                            className="calendar"//並記得classname scss styling導入
-                            minDate={new Date()}
-                            ranges={dates}//才可以選範圍並範圍更改會re-render useState的date等於這是個抓取date範圍並顯示在日曆上，等於是從暫存器輸入到日曆顯示上面
-                            locale={locales['uk']}
-                            //最後這邊就是語言版本使用繁體中文zhTW概念
-                            //就可以用到上面的import * as locales from 'react-date-range/dist/locale';
-
-                                                    />}
+                        <input type="text" placeholder='你要去哪裡？' className='SearchInput' onChange={(e)=>setDestination(e.target.value)}/>
                     </div>
                     <div className="SearchBarItem">
-                        <FontAwesomeIcon icon={faPeopleGroup} onClick={ ()=> setOpenConditions(!openConditions)}/>
-                        <span className='searchText' onClick={ ()=> setOpenConditions(!openConditions)}>
-                            {conditions.adult}位成人 · {conditions.children}位小孩 ·{conditions.room}間房
-                        </span>
+                        <FontAwesomeIcon icon={faCalendar} onClick={() => setOpenCalendar(!openCalendar)} />
+                        <span className="SearchText" onClick={() => setOpenCalendar(!openCalendar)} >
+              {format(dates[0].startDate, "MM/dd/yyyy")} - {format(dates[0].endDate, "MM/dd/yyyy")}
+            </span>
+                        {openCalendar && <DateRange
+                            editableDateInputs={true}
+                            onChange={item => setDates([item.selection])}
+                            moveRangeOnFirstSelection={false}
+                            className="calendar"
+                            ranges={dates}
+                            minDate={new Date()}
+                            locale={locales['zhTW']}
+                        />}
+                    </div>
+                    <div className="SearchBarItem">
+                        <FontAwesomeIcon icon={faPeopleGroup} onClick={() => setOpenConditions(!openConditions)} />
+                        <span className="SearchText" onClick={() => setOpenConditions(!openConditions)}  >{conditions.adult}位成人 · {conditions.children} 位小孩 · {conditions.room} 間房</span>
                         {openConditions &&
                             <div className="ConditionsContainer">
                                 <div className="condition">
-                                    Adults
+                                    成人
                                     <div className="conditionCounter">
                                         <button className="conditionCounterButton" disabled={conditions.adult <=1 }
-                                                onClick={() => handleCounter("adult","decrease")}>-</button>
+                                                onClick={() => handleCounter("adult","decrease")} >
+                                            -
+                                        </button>
                                         <span className="number">{conditions.adult}</span>
-                                        <button className="conditionCounterButton" onClick={() => handleCounter("adult","increase")}>+</button>
+                                        <button className="conditionCounterButton" onClick={() => handleCounter("adult","increase")}>
+                                            +
+                                        </button>
                                     </div>
                                 </div>
                                 <div className="condition">
-                                    <span>Children <p>0-17 years</p></span>
+                  <span>小孩
+                    <p>0-17 歲</p>
+                  </span>
+
                                     <div className="conditionCounter">
                                         <button className="conditionCounterButton" disabled={conditions.children <=0 }
-                                                onClick={() => handleCounter("children","decrease")}>-</button>
+                                                onClick={() => handleCounter("children","decrease")} >
+                                            -
+                                        </button>
                                         <span className="number">{conditions.children}</span>
-                                        <button className="conditionCounterButton" onClick={() => handleCounter("children","increase")}>+</button>
+                                        <button className="conditionCounterButton" onClick={() => handleCounter("children","increase")}>
+                                            +
+                                        </button>
                                     </div>
                                 </div>
+
                                 <div className="condition">
-                                    Rooms
+                                    房間
                                     <div className="conditionCounter">
-                                        <button className="conditionCounterButton" disabled={conditions.rooms <=1 }
-                                                 onClick={() => handleCounter("rooms","decrease")}>-</button>
-                                        <span className="number">{conditions.rooms}</span>
-                                        <button className="conditionCounterButton" onClick={() => handleCounter("rooms","increase")}>+</button>
+                                        <button className="conditionCounterButton" disabled={conditions.room <=1 }
+                                                onClick={() => handleCounter("room","decrease")}>
+                                            -
+                                        </button>
+                                        <span className="number"> {conditions.room}</span>
+                                        <button className="conditionCounterButton" onClick={() => handleCounter("room","increase")}>
+                                            +
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         }
-                    </div>
-                    <button className='SearchBarBtn' onClick={handleSearchBarSubmit}>Search</button>
-                </div>
 
+                    </div>
+                    <button className='SearchBarBtn' onClick={handleSearchBarSubmit}>搜尋</button>
+                </div>
             </div>
+
         </div>
     )
 }
 
-export default Header;
+export default Header
