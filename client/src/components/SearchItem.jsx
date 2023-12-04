@@ -1,15 +1,34 @@
 import React from "react";
 import "./searchItem.scss";
 import { Link } from 'react-router-dom'
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import { styled } from '@mui/material/styles';
+import { ReservationDatesAndPrice } from '../datesCalculate'
 
-const SearchItem = ({active, dataDetail,conditions,dates }) => {
+
+const SearchItem = ({active, dataDetail,conditions, dates }) => {
+
+    const ItemTooltip = styled(({ className, ...props }) => (
+        <Tooltip {...props} classes={{ popper: className }} />))(({ theme }) => ({
+        [`& .${tooltipClasses.tooltip}`]: {
+            backgroundColor: '#F5544A',
+            boxShadow: theme.shadows[1],
+            padding: 10,
+            fontSize: 11,
+        },
+    }));
+
+    const hotelsPrice = dataDetail.cheapestPrice;
+    const { DatesLength, totalHotelsPrice } = ReservationDatesAndPrice(dates[0]?.startDate, dates[0]?.endDate, hotelsPrice)
+
+
     return (
         <div className={`SearchItem ${active}`}>
             <img className="itemImg" src={dataDetail.photos[0]} alt="" />
             <div className="itemInfo">
                 <div className="infoTitle">
                     <h2>
-                        台南微醺文旅|老宅古城|漫遊體驗
+                        {dataDetail.name}
                     </h2>
                     <div className='infoTitleRight'>
                         {dataDetail.rating<9.5 ? "傑出":"極致好評"} <br />
@@ -37,15 +56,27 @@ const SearchItem = ({active, dataDetail,conditions,dates }) => {
                         </div>
                         <div className="detailRight">
                               <span className="optionDes">
-                                 {conditions.adult} 位大人 {conditions.children!=0 && `、${conditions.children} 位小孩`}
+                                  {DatesLength == 0 ? <>請先選擇住宿日期</> : `總共 ${DatesLength} 晚`}
+
+                                  <br />{conditions.adult} 位大人 {conditions.children != 0 && `、${conditions.children} 位小孩`}
                               </span>
                               <span className="price">
-                            TWD {dataDetail.cheapestPrice}
+                                  {DatesLength == 0 ? `TWD ${dataDetail.cheapestPrice} 價格` : `TWD ${totalHotelsPrice} 價格`}
                               </span>
                               <span className="tax">
                                 含稅費與其他費用
                               </span>
-                            <button className='btn' >查看客房供應情況</button>
+
+                            {DatesLength == 0 ?
+                                <ItemTooltip title="請先輸入住宿日期，並按左側 搜尋 查看結果" followCursor>
+                                    <button className='btn' >查看客房供應情況</button>
+                                </ItemTooltip>
+                                :
+                                <Link to={`/hotels/${dataDetail._id}`}>
+                                    <button className='btn' >查看客房供應情況</button>
+                                </Link>
+                            }
+
                         </div>
                     </div>
                 </div>

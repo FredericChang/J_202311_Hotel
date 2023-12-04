@@ -21,16 +21,23 @@ const HotelsList = () => {
     const [lowestPrice, setLowestPrice] = useState("");
     const [highestPrice, setHighestPrice] = useState("");
 
+    // const searchUrl =
+    //     `http://localhost:5000/api/v1/hotels`
     const searchUrl =
-        `/hotels?${destination ? "city=" + destination : "popularHotel=true"} &lowestPrice=${lowestPrice} &highestPrice=${highestPrice}`
-
+        `http://localhost:5000/api/v1/hotels?${destination ? "city=" + destination : "popularHotel=true"}&lowestPrice=${lowestPrice}&highestPrice=${highestPrice}`
+    //{{ _.base_url }}/hotels?"city="布達佩斯"&lowestPrice=100&highestPrice=8000
+    //{{ _.base_url }}/hotels?"city="布達佩斯"
+    //{{ _.base_url }}/hotels?"popularHotel=true
     const [fetchDataUrl,setFetchDataUrl]=useState(searchUrl)//useFetch要能夠重新搜尋就改動url讓他可以重整
     const {data,loading,error} =useFetch(fetchDataUrl)
 
     const handleClick = () => {
         dispatch({ type: new_Options, payload: { city: destination, date: dates, options: conditions } })
+        console.log("destination", destination)
         setFetchDataUrl(searchUrl)
+        console.log(fetchDataUrl)
     }
+
     return (
         <>
             <div>
@@ -50,7 +57,7 @@ const HotelsList = () => {
                             <div className="listItem">
                                 <label>入住/退房日期 {format(dates[0].startDate, "MM/dd/yyyy")} - {format(dates[0].endDate, "MM/dd/yyyy")}</label>
                                 <span className='dates' >
-                  <div className="searchInput" onClick={() => setOpenCalendar(!openCalendar)} >入住時間 - 退房時間</div>
+                                  <div className="searchInput" onClick={() => setOpenCalendar(!openCalendar)} >入住時間 - 退房時間</div>
                                     {openCalendar && <DateRange
                                         editableDateInputs={true}
                                         onChange={item => setDates([item.selection])}
@@ -60,25 +67,25 @@ const HotelsList = () => {
                                         minDate={new Date()}
                                         locale={locales['zhTW']}
                                     />}
-                </span>
+                                </span>
                             </div>
 
                             <div className="listItem">
                                 <div className="listItemLimitPrice">
-                  <span className="limitTitle">
-                    每晚最低價格
-                  </span>
+                                  <span className="limitTitle">
+                                    每晚最低價格
+                                  </span>
                                     <input type="text" className='searchInput' onChange={(e)=>setLowestPrice(e.target.value)}/>
                                 </div>
                                 <div className="listItemLimitPrice">
-                  <span className="limitTitle">
-                    每晚最高價格
-                  </span>
+                                  <span className="limitTitle">
+                                    每晚最高價格
+                                  </span>
                                     <input type="text" className='searchInput' onChange={(e)=>setHighestPrice(e.target.value)}/>
                                 </div>
                                 <div className="listItmConditions">
-                  <span className="SearchText" onClick={() => setOpenConditions(!openConditions)}  >
-                    {conditions.adult}位成人 · {conditions.children} 位小孩 · {conditions.room} 間房</span>
+                                  <span className="SearchText" onClick={() => setOpenConditions(!openConditions)}  >
+                                    {conditions.adult}位成人 · {conditions.children} 位小孩 · {conditions.room} 間房</span>
                                 </div>
                             </div>
                             <div className="listItem">
