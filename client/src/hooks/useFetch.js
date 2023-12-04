@@ -19,7 +19,7 @@ const useFetch = (url) => {
             setLoading(false);//代表連線時成功的結束
         }
         fetchData()
-    }, []);
+    }, [url]);
     return {
         data,
         loading,

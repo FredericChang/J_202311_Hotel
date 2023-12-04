@@ -16,6 +16,19 @@ const Skeleton = ({ type,length}) => {
             </div>
         </div>
     );
+
+    const SearchItemSkeleton = ({i}) => (
+        <div className="SearchItemSK" key={i}>
+            <div className='imgSK animation' />
+            <div className="InfoSK">
+                <div className="titleSK animation" />
+                <div className="subTitleSK animation" />
+                <div className="decSK animation" />
+                <div className="rateAndCommentSK animation" />
+                <div className="priceSK animation" />
+            </div>
+        </div>
+    );
     const AmountSkeleton = () => (
         <div className="amountSK" />
     );
@@ -25,5 +38,7 @@ const Skeleton = ({ type,length}) => {
     if (type === "Amount") return (<AmountSkeleton />);
     //amount 不用是因為他有上面得data.js的UI內資料不像PopularHotels是整個傳過來的資料總數都不確定
     //而Amount是因為是我們的測試做的type與city就都知道有這麼多就不用在傳入length告訴他要生成多少個遮罩
+    if (type === "SearchItemSK") return Array(number).fill().map((item,i)=><SearchItemSkeleton key={i}/>);
+
 }
 export default Skeleton
