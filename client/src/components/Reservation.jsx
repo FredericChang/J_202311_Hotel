@@ -1,41 +1,42 @@
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { format } from 'date-fns'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useContext } from 'react'
 import { OptionsContext } from '../context/OptionsContext'
 import useFetch from '../hooks/useFetch'
 import "./reservation.scss"
-import { motion } from "framer-motion";
-import { LoginContext } from '../context/LoginContext'
-import axios from 'axios'
-import { ReservationDatesList } from '../datesCalculate'
-import useCreateOrder from '../hooks/useCreateOrder'
-import { useNavigate } from 'react-router-dom'
 
 const Reservation = () => {
-    const { data, loading, error } = useFetch("http://localhost:5000/api/v1/hotels")
-    const { date, options } = useContext(OptionsContext)
-    const { user } = useContext(LoginContext)
-    //在這邊建立我們的order訂單，同時新增我們的room的unavailableDates的時間
-    //並之後在爬梳unavailableDates如果發現有客戶有選的時間跟我們的unavailableDates有衝突就不讓他勾選
-
-    const [roomNumber, setRoomNumber] = useState([])
-    const [ orderData, setOrderData ] = useState({
-        userId: user._id,
-        hotelId: hotelid,
-        RoomNumberId: [],
-        ReservationDates: [
-            {
-                startDate: date[0].startDate,
-                endDate: date[0].endDate,
-            }
-        ],
-        totalPrice: 0,
-        options: {
-            adult: options.adult,
-            children: options.children,
-            rooms: options.room,
-        }
-    })
+    const {data, loading, error} = useFetch("http://localhost:5000/api/v1/hotels")
+    return (
+        <div className='Reservation'>
+            <div className="container">
+                <div className="wrapper">
+                    <div className="title">
+                        <h2>空房情況</h2>
+                    </div>
+                    <div className="body">
+                        <div className="roomTitle">
+                            <div>客房類型</div>
+                            <div>適合人數</div>
+                            <div>房型今日價格</div>
+                            <div>住宿總價格</div>
+                            <div>選擇房型編號</div>
+                        </div>
+                        <div className='roomData'>
+                            <div className='roomColumn'>
+                                <div className='roomType'>雙人房</div>
+                                <div className='roomType'>雙人房</div>
+                                <div className='roomType'>雙人房</div>
+                            </div>
+                            <button className='reservationbtn'> 現在預訂</button>
+                        </div>
+                    </div >
+                </div>
+            </div>
+        </div >
+    )
 }
+
+export default Reservation

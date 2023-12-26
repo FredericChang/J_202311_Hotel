@@ -55,8 +55,8 @@ const Header = () => {
                     <div className="SearchBarItem">
                         <FontAwesomeIcon icon={faCalendar} onClick={() => setOpenCalendar(!openCalendar)} />
                         <span className="SearchText" onClick={() => setOpenCalendar(!openCalendar)} >
-              {format(dates[0].startDate, "MM/dd/yyyy")} - {format(dates[0].endDate, "MM/dd/yyyy")}
-            </span>
+                          {format(dates[0].startDate, "MM/dd/yyyy")} - {format(dates[0].endDate, "MM/dd/yyyy")}
+                        </span>
                         {openCalendar && <DateRange
                             editableDateInputs={true}
                             onChange={item => setDates([item.selection])}

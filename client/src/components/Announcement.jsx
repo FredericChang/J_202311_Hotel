@@ -41,7 +41,6 @@ const Announcement = ({ type }) => {
                             </div>
                         </div>
                     </div>
-
                 }
             </div>
         </div>

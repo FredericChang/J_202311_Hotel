@@ -5,6 +5,16 @@ import Footer from '../components/Footer';
 import Navbar from '../components/Navbar'
 import { gsap } from "gsap";
 import "./hotel.scss"
+import { useLocation } from 'react-router-dom';
+import useFetch from '../hooks/useFetch';
+import { useContext } from 'react';
+import { LoginContext } from '../context/LoginContext';
+import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react';
+import Reservation from "../components/Reservation";
+import Header from "../components/Header";
+
+
 const Hotel = () => {
 
     let comments = useRef(null);
@@ -61,7 +71,6 @@ const Hotel = () => {
 
         })
     }
-
     const slideDirection = (direction) => {
         let newSlideIndex;
         let lastPicture = photos.length - 1;
@@ -71,6 +80,17 @@ const Hotel = () => {
         } else {
             sliderIndex == lastPicture? newSlideIndex = 0 : newSlideIndex = sliderIndex + 1;
             setSiderIndex(newSlideIndex);
+        }
+    }
+
+    const {user} =useContext(LoginContext)
+    const [openReservation, setOpenReservation] = useState(false);
+    const navgator = useNavigate()
+    const handleReservation = () => {
+        if (user) {
+            setOpenReservation(true)
+        } else {
+            navgator("/login")
         }
     }
 
@@ -114,7 +134,7 @@ const Hotel = () => {
                             </div>
                         </div>
                         <div className="titleRight">
-                            <button className="reservationBtn">現在就預訂</button>
+                            <button className="reservationBtn" onClick={handleReservation}>現在就預訂</button>
                             <p> <FontAwesomeIcon icon={faHeartCircleCheck} /> <span>買貴退差價</span></p>
                         </div>
                     </div>
@@ -145,7 +165,6 @@ const Hotel = () => {
                         </div>
                     </div>
 
-
                     <div className="hotelDes">
                         <div className="hotelDesText">
                             H& 台南微醺文旅 I老宅古城 漫遊體驗I H& tainan weshare hotel
@@ -171,13 +190,14 @@ const Hotel = () => {
                                 此住宿位於台南評分最高的地區，地理位置評分高達 9.3 分
                                 深受獨行旅客歡迎</p>
                             <h2>TWD 6,240</h2>
-                            <button>現在就預訂</button>
+                            <button onClick={handleReservation}>現在就預訂</button>
                         </div>
                     </div>
 
                 </div>
             </div>
             <Footer />
+            {openReservation && <Reservation/>}
         </div>
 
     )
