@@ -17,9 +17,13 @@ import Header from "../components/Header";
 
 const Hotel = () => {
 
+    const locationHotelUrl = useLocation()
+    const hotelid = locationHotelUrl.pathname.split("/")[2]
+
     let comments = useRef(null);
     const [openSlider, setOpenSlider] = React.useState(false);
     const [sliderIndex, setSiderIndex] = useState(0);
+
     const clickSlider = (index) => {
         setSiderIndex(index);
         setOpenSlider(true);
@@ -197,7 +201,7 @@ const Hotel = () => {
                 </div>
             </div>
             <Footer />
-            {openReservation && <Reservation/>}
+            {openReservation && <Reservation openSetting={setOpenReservation} hotelid={hotelid} />}
         </div>
 
     )
