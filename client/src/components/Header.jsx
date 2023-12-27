@@ -1,15 +1,15 @@
-import { faBed, faCalendar, faPeopleGroup } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useContext, useState } from 'react'
-import 'react-date-range/dist/styles.css'; // main css file
-import 'react-date-range/dist/theme/default.css'; // theme css file
+import { faBed, faCalendar, faPeopleGroup } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import format from 'date-fns/format';
+import { useContext, useState } from 'react';
 import { DateRange } from 'react-date-range';
 import * as locales from 'react-date-range/dist/locale';
-import format from 'date-fns/format';
-import "./header.scss"
+import 'react-date-range/dist/styles.css'; // main css file
+import 'react-date-range/dist/theme/default.css'; // theme css file
 import { useNavigate } from 'react-router-dom';
 import { new_Options } from '../constants/actionTypes';
 import { OptionsContext } from '../context/OptionsContext';
+import "./header.scss";
 const Header = () => {
     const navigate=useNavigate()
     const { city,date,options,dispatch } = useContext(OptionsContext);
@@ -86,10 +86,9 @@ const Header = () => {
                                     </div>
                                 </div>
                                 <div className="condition">
-                  <span>小孩
-                    <p>0-17 歲</p>
-                  </span>
-
+                                    <span>小孩
+                                        <p>0-17 歲</p>
+                                    </span>
                                     <div className="conditionCounter">
                                         <button className="conditionCounterButton" disabled={conditions.children <=0 }
                                                 onClick={() => handleCounter("children","decrease")} >

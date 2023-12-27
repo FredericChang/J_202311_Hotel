@@ -1,24 +1,26 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { LoginContextProvider } from "./context/LoginContext";
-import { OptionsContextProvider } from './context/OptionsContext';
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App'
+import { ActiveItemContextProvider } from './context/ActiveItemContext' // Add this line
+import { LoginContextProvider } from './context/LoginContext'
+import { OptionsContextProvider } from './context/OptionsContext'
+import './index.css'
+import reportWebVitals from './reportWebVitals'
 
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
-      <OptionsContextProvider>
-              <LoginContextProvider>
-                  <App />
-              </LoginContextProvider>
-          </OptionsContextProvider>
+    <OptionsContextProvider>
+      <LoginContextProvider>
+        <ActiveItemContextProvider>
+          <App />
+        </ActiveItemContextProvider>
+      </LoginContextProvider>
+    </OptionsContextProvider>
   </React.StrictMode>
-);
+)
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+reportWebVitals()

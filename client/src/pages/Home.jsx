@@ -1,12 +1,12 @@
-import React from "react";
-import Navbar from "../components/Navbar";
-import Header from "../components/Header";
 import Announcement from "../components/Announcement";
 import Feature from "../components/Feature";
 import Footer from "../components/Footer";
-import { useNavigate } from 'react-router-dom';
-import {Link} from "react-router-dom"
-import "./home.scss"
+import Header from "../components/Header";
+import Header2 from "../components/Header2";
+import Information from "../components/Information";
+import Navbar from "../components/Navbar";
+import "./home.scss";
+
 
 const array = [
     {id: 0, name: "飯店"},
@@ -25,6 +25,8 @@ const Home = () => {
         <div className='home'>
             <h1>Home</h1>
             <Navbar/>
+            <Header2/>
+            <Information/>
             <Header/>
             <Announcement type={"Upper half"}/>
             <Feature/>
