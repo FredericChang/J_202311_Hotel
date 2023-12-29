@@ -1,10 +1,12 @@
 import { faBed, faCalendar, faPlane } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Divider } from "@mui/material";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
 import "./information.scss";
 
 function Information() {
+
     const group1 = [ "180l", "340l", "600l", "1000l", "1500l", "2000l" ];
     const group2 = [ "-40 C to +180", "-70 C to +180", "WT69/ R-469A"];
     const group3 = [ "3k/min", "5k/min", "10k/min"];
@@ -22,10 +24,11 @@ function Information() {
     const [group1Itme, setGroup1Item] = useState("");
     const [group12tme, setGroup2Item] = useState("");
     const [group13tme, setGroup3Item] = useState("");
+    
     const [activeKey, setActiveKey] = useState(null);
-    const [activeItem, setActiveItem] = useState(null);
-    const [activeItemTemp, setActiveItemTemp] = useState(null);
-    const [activeItemTempC, setActiveItemTempC] = useState(null);
+    const [activeItem2, setActiveItem2] = useState(localStorage.getItem('activeItem2') || null);
+    const [activeItemTemp, setActiveItemTemp] = useState(localStorage.getItem('activeItemTemp') || null);
+    const [activeItemTempC, setActiveItemTempC] = useState(localStorage.getItem('activeItemTempC') || null);
  
     const dimensions = {
         "180l": {
@@ -55,6 +58,19 @@ function Information() {
 
     };
 
+    useEffect(() => {
+    localStorage.setItem('activeItem2', activeItem2);
+    }, [activeItem2]);
+
+    useEffect(() => {
+    localStorage.setItem('activeItemTemp', activeItemTemp);
+    }, [activeItemTemp]);
+
+    useEffect(() => {
+    localStorage.setItem('activeItemTempC', activeItemTempC);
+    }, [activeItemTempC]);
+
+
     const handleClick = (item) => { 
         if(group1.includes(item)) {
             setGroup1Item(item);
@@ -66,6 +82,7 @@ function Information() {
             console.log(spaceDimensions);
             console.log(outSpaceDimensions);
         }
+
     }
 
   return (
@@ -75,7 +92,6 @@ function Information() {
                 <h1>TempEvent</h1>
             </div>
             <Divider className='divider'/>
-
             <div className="group">
                 <div className="left">
                     <h2 className="groupTitle">Volume:</h2>
@@ -84,15 +100,15 @@ function Information() {
                 <div className="right">
                     <div className="buttonGroup">
                         {group1.map((item) => (
-                            <button className={`button ${item === activeItem ? 'active' : ''}`}  onClick={() => {
-                                    setActiveItem(item);
+                            <button className={`button ${item === activeItem2 ? 'active' : ''}`}  onClick={() => {
+                                    setActiveItem2(item);
                                     handleClick(item);
                                 }}> {item}
                             </button>
                         
                         ))} 
                     </div>
-                    <div>{activeItem}</div>
+                    <div>{activeItem2}</div>
                 </div>
             </div>
             <Divider className='divider'/>

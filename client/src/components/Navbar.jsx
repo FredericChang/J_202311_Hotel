@@ -1,11 +1,9 @@
-import React, { useContext } from 'react'
-import "./navbar.scss"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBed, faCar, faPlane, faTaxi, faToriiGate } from '@fortawesome/free-solid-svg-icons'
-import {Link} from "react-router-dom"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useContext } from 'react'
+import { Link } from "react-router-dom"
 import { LoginContext } from '../context/LoginContext'
-
-import { useNavigate } from 'react-router-dom';
+import "./navbar.scss"
 
 
 
