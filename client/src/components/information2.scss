@@ -122,66 +122,69 @@
               }
             }
         }
-          .groupX {
+        .groupX {
+        display: flex;
+        height: auto;
+        gap: 20px;//每隔btn的間距
+        .left3 {
+            padding-top: 10px;
+            width: 15%;
             display: flex;
-            height: auto;
-            gap: 20px;//每隔btn的間距
-            .left3 {
-                padding-top: 10px;
-                width: 15%;
-                display: flex;
-                flex-direction: column;
-                border: 1pc solid lightgrey;
-                .groupTitle {
-                    font-size: 15px;
-                    font-weight: 500;
-                    margin-bottom: 10px;
-                }
+            flex-direction: column;
+            border: 1pc solid lightgrey;
+            .groupTitle {
+                font-size: 15px;
+                font-weight: 500;
+                margin-bottom: 10px;
             }
-            .right3 {
-                width: 85%;
+        }
+        .right3 {
+            width: 85%;
+            display: flex;
+            border: 1pc solid lightgrey;
+            flex-direction: row;
+            .AccessContainer {
                 display: flex;
-                border: 1pc solid lightgrey;
+                flex-wrap: wrap;
                 flex-direction: row;
-                .AccessContainer {
+                .AccessContainer1 {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                    .AccessTitle, .AccessShow {
+                        padding: 0 10px; // Adjust the padding as needed
+                    }
+                }
+                .AccessContainer2 {
+                    box-sizing: border-box;
+                    max-width: 70%;
+                    img {
+                        max-width: 100%;
+                        height: auto;
+                    }
+                }
+                .AccessContainer3 {
                     display: flex;
                     flex-wrap: wrap;
-                    flex-direction: row;
-                    .AccessContainer1 {
+                    flex-direction: column;
+                    .row {
                         display: flex;
                         flex-direction: row;
-                        justify-content: space-between;
+                        justify-content: flex-start;
                         align-items: center;
-                        .AccessTitle, .AccessShow {
-                            padding: 0 10px; // Adjust the padding as needed
-                        }
-                    }
-                    .AccessContainer2 {
-                        box-sizing: border-box;
-                        max-width: 70%;
-                        img {
-                          max-width: 100%;
-                          height: auto;
-                        }
-                    }
-                    .AccessContainer3 {
-                        display: flex;
-                        flex-wrap: wrap;
-                        .row {
-                            display: flex;
-                            flex-direction: row;
-                            justify-content: flex-start;
-                            align-items: center;
-                            .title, .combobox, .textbox {
-                                margin-right: 20px; // Adjust the margin as needed
-                              }
+                        .title, .combobox, .textbox, comboboxHole {
+                            margin-right: 20px; // Adjust the margin as needed
+                            }
 
-                        }
                     }
-
                 }
+
             }
-          }
+        }
+        }
+
+        
           
         
     }
@@ -198,5 +201,99 @@
         background-color: lightgrey;
         margin: 20px 0;
     }
+    .panelContainer {
+        display: flex;
+        flex-direction: column;
+        border: 1pc solid lightgrey;
+        max-width: 1024px;
+        width: 100%;
+        .panelLeft {
+            display: flex;
+            border: 1pc solid rgb(206, 88, 88);
+
+
+            .panel-last-left{
+
+                display: flex;
+                .board-last{
+                    display: flex;
+                    flex-wrap: wrap;
+                    width: 155px;
+                    height: 320px;
+                    border: 1px solid rgb(82, 180, 25);
+                    .transparent-cell {
+
+                        border: 1px dotted rgba(0,0,0,0.3);
+                        margin: 1px;
+                        background-color: rgba(0,0,0,0.0);
+                        transition: 0.4s ease-in-out;
+
+                        width: var(--cell-size);
+                        height: var(--cell-size);
+                        border: 1px solid black;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        position: relative;
+                        cursor: pointer;
+                    }
+                    .ConditionsContainer {
+                        display: flex;
+                        flex-wrap: wrap;
+
+                        border: 1px solid lightgrey;
+                        .condition {
+                            border: 1px solid lightgrey;
+                            width: auto;
+                            height: auto;
+                            display: flex;
+                            flex-wrap: wrap;
+                            flex-direction: row;
+                            justify-content: center;
+                            align-items:flex-start;
+                            position: relative;
+                            .conditionCounterButton {
+                                width: 40px;
+                            }
+                        }
+                        
+                    }
+
+
+
+                }
+                .board-last-2{
+                    display: flex;
+                    flex-wrap: wrap;
+                    width: 155px;
+                    height: 320px;
+                    border: 1px solid rgb(81, 91, 221);
+                    .transparent-cell {
+
+                        border: 1px dotted rgba(0,0,0,0.3);
+                        margin: 1px;
+                        background-color: rgba(0,0,0,0.0);
+                        transition: 0.4s ease-in-out;
+
+                        width: var(--cell-size);
+                        height: var(--cell-size);
+                        border: 1px solid black;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        position: relative;
+                        cursor: pointer;
+                    }
+                    
+                }
+
+            }
+        }
+    }
+
 
 }
+
+:root {
+    --cell-size: 47px;
+  }

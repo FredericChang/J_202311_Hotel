@@ -40,18 +40,70 @@ function Information2() {
       };
 
     const [setupItem, setSetupItem] = useState("");
-    const [rows, setRows] = useState([{ value: '50mm' }]); // Start with one row
+    const [rows, setRows] = useState([
+        { value: '50mm', holeValue: 'L1' }, // ROW1
+      ]);
 
     const handleChangeCombo = (index) => (event) => {
         const newRows = [...rows];
-        newRows[index] = { value: event.target.value };
+        newRows[index] = { ...newRows[index], value: event.target.value };
         setRows(newRows);
-        console.log(event.target.value + " " + index);
-      
+        const newHoleValue = newRows[index].holeValue;
+        console.log("rows[index].holeValue = " + newHoleValue);
+
         if (event.target.value !== 'none' && rows.length < 10 && rows.length === index+1 ) {
-          setRows([...newRows, { value: '50mm' }]);
+          setRows([...newRows, { value: '50mm', holeValue: "R1" }]);
         }
-      };
+
+        // if (event.target.value !== 'none' && rows.length < 10 && rows.length === index+1 && newHoleValue!== 'Null' ) {
+        //     setRows([...newRows, { value: '50mm', holeValue: "Null" }]);
+        // }
+
+
+    };
+
+    const handleChangeComboHole = (index) => (event) => {
+        const newRows = [...rows];
+        newRows[index] = { ...newRows[index], holeValue: event.target.value };
+        const newHoleValue = newRows[index].holeValue;
+        console.log("222rows[index].holeValue = " + newHoleValue);
+        setRows(newRows);
+    };
+
+    const getOptions = (index, type) => {
+        const selectedValues = rows.map(row => row.holeValue);
+        let options = [];
+
+        if (index === 0) {
+            options = ['L1'];
+        } else if (index === 1) {
+            options = ['R1'];
+        } else {
+            options = ['L2', 'L3', 'L4', 'L5', 'R2', 'R3', 'R4', 'R5', 'Null'];
+        }
+        // options = options.filter(option => !selectedValues.includes(option) || option === rows[index].holeValue);
+        return options;
+    };
+
+    const [boxes, setBoxes] = useState([
+        {
+            1:  null,
+            2:  null,
+            3:  null,
+            4:  null,
+            5:  null,
+            6:  null,
+            7:  null,
+            8:  null,
+            9:  null,
+
+        }
+    ]);
+    // const [openConditions, setOpenConditions] = useState(false);
+    const [openConditions, setOpenConditions] = useState(Array(9).fill(false));
+    const [selectedCircles, setSelectedCircles] = useState(Array(9).fill(null));
+
+
  
     const dimensions = {
         "180l": {
@@ -134,7 +186,6 @@ function Information2() {
                                     handleClick(item);
                                 }}> {item}
                             </button>
-                        
                         ))} 
                     </div>
                     <div>{activeItem2}</div>
@@ -172,8 +223,12 @@ function Information2() {
                                     <option value="80mm">80mm</option>
                                     <option value="150mm">150mm</option>
                                 </select>
-                                <h2 className="title">{row.value}</h2>
-                                <input type="text" className="textbox"/>
+                                <h2 className="title">title</h2>
+                                <select  className="comboboxHole" value={row.holeValue} onChang={handleChangeComboHole(index)} >
+                                    {getOptions(index, 'holeValue').map(option => (
+                                        <option value={option}>{option}</option>
+                                    ))}
+                                </select>
                                 </div>
                             ))}
                         </div>
@@ -181,6 +236,75 @@ function Information2() {
                 </div>
             </div>
             <Divider className='divider'/>
+            <div className="panelContainer">
+                <div className="panelLeft">
+                    <div className="panel-last-left">
+                        <div className="board-last">
+
+                        {Array.from({ length: 9 }).map((_, index) => (
+                            <div 
+                                key={index} 
+                                className="transparent-cell"  
+                                onClick={() => {
+                                    // Create a new array with the state of the clicked cell toggled
+                                    const newOpenConditions = [...openConditions];
+                                    newOpenConditions[index] = !newOpenConditions[index];
+                                    setOpenConditions(newOpenConditions);
+                                }}
+                                onBlur= {() => {
+                                    setTimeout(() => {
+                                        const newOpenConditions = [...openConditions];
+                                        newOpenConditions[index] = false;
+                                        setOpenConditions(newOpenConditions);
+                                    }, 0);
+                                }}
+                                    // Add tabIndex to make the div focusable
+                                tabIndex={0}
+                            > 
+                            { openConditions[index] &&
+                                <div className="ConditionsContainer"> 
+                                <div className="condition">
+                                    <button className="conditionCounterButton" onClick={() => {}} >
+                                        --
+                                    </button>
+
+                                    <button className="conditionCounterButton" onClick={() => {}} >
+                                        50
+                                    </button>
+
+                                    <button className="conditionCounterButton" onClick={() => {}} >
+                                        125
+                                    </button>
+
+                                    <button className="conditionCounterButton" onClick={() => {}} >
+                                        B50
+                                    </button>
+
+                                    <button className="conditionCounterButton" onClick={() => {}} >
+                                        B125
+                                    </button>
+
+                                    <button className="conditionCounterButton" onClick={() => {}} >
+                                        B150
+                                    </button>
+                                </div>
+                                </div> 
+                            }
+                            
+                            </div>
+                        ))}
+  
+                        
+                            
+                        </div>
+                        <div className="board-last-2">
+                            {Array.from({ length: 18 }).map((_, index) => (
+                                 <div key={index} className="transparent-cell">df</div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
             
         </div>
     </div>
