@@ -261,35 +261,79 @@ function Information2() {
                                     // Add tabIndex to make the div focusable
                                 tabIndex={0}
                             > 
-                            { openConditions[index] &&
-                                <div className="ConditionsContainer"> 
-                                <div className="condition">
-                                    <button className="conditionCounterButton" onClick={() => {}} >
-                                        --
-                                    </button>
+                                { openConditions[index] &&
+                                    <div className="ConditionsContainer"> 
+                                    <div className="condition">
+                                        <button className="conditionCounterButton" onMouseDown={(event) => {
+                                            event.stopPropagation();
+                                            const newSelectedCircles = [...selectedCircles];
+                                            newSelectedCircles[index+1] = '';
+                                            setSelectedCircles(newSelectedCircles);
+                                            console.log("selectedCircles[index] = " + newSelectedCircles[index+1]);
 
-                                    <button className="conditionCounterButton" onClick={() => {}} >
-                                        50
-                                    </button>
+                                        }} >
+                                            --
+                                        </button>
 
-                                    <button className="conditionCounterButton" onClick={() => {}} >
-                                        125
-                                    </button>
+                                        <button className="conditionCounterButton" onMouseDown={(event) => {
+                                            event.stopPropagation();
+                                            const newSelectedCircles = [...selectedCircles];
+                                            newSelectedCircles[index+1] = 'Circle1';
+                                            setSelectedCircles(newSelectedCircles);
+                                            console.log("selectedCircles[index] = " + newSelectedCircles[index+1]);
 
-                                    <button className="conditionCounterButton" onClick={() => {}} >
-                                        B50
-                                    </button>
+                                        }} >
+                                            50
+                                        </button>
 
-                                    <button className="conditionCounterButton" onClick={() => {}} >
-                                        B125
-                                    </button>
+                                        <button className="conditionCounterButton" onMouseDown={() => {
+                                            const newSelectedCircles = [...selectedCircles];
+                                            newSelectedCircles[index+1] = 'Circle2';
+                                            setSelectedCircles(newSelectedCircles);
+                                            console.log("selectedCircles[index] = " + newSelectedCircles[index+1]);
 
-                                    <button className="conditionCounterButton" onClick={() => {}} >
-                                        B150
-                                    </button>
-                                </div>
-                                </div> 
-                            }
+                                        }} >
+                                            125
+                                        </button>
+
+                                        <button className="conditionCounterButton" onMouseDown={() => {
+                                            const newSelectedCircles = [...selectedCircles];
+                                            newSelectedCircles[index+1] = 'Circle3';
+                                            setSelectedCircles(newSelectedCircles);
+                                            console.log("selectedCircles[index] = " + newSelectedCircles[index+1]);
+
+                                        }} >
+                                            B50
+                                        </button>
+
+                                        <button className="conditionCounterButton" onMouseDown={() => {
+                                            const newSelectedCircles = [...selectedCircles];
+                                            newSelectedCircles[index+1] = 'Circle4';
+                                            setSelectedCircles(newSelectedCircles);
+                                            console.log("selectedCircles[index] = " + newSelectedCircles[index+1]);
+
+                                        }} >
+                                            B125
+                                        </button>
+
+                                        <button className="conditionCounterButton" onMouseDown={() => {
+                                            const newSelectedCircles = [...selectedCircles];
+                                            newSelectedCircles[index+1] = 'Circle5';
+                                            setSelectedCircles(newSelectedCircles);
+                                            console.log("selectedCircles[index] = " + newSelectedCircles[index+1]);
+                                        }} >
+                                            B150
+                                        </button>
+                                        </div>
+                                    </div> 
+                                }
+                
+
+
+                                { selectedCircles[index+1] && <div className={selectedCircles[index+1]}></div> }
+                                {/* <div className="Circle1">
+                                    {selectedCircles[index] === 'circle1' && <div>C</div>}
+                                </div> */}
                             
                             </div>
                         ))}

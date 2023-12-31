@@ -236,12 +236,16 @@
                         align-items: center;
                         position: relative;
                         cursor: pointer;
+
                     }
                     .ConditionsContainer {
                         display: flex;
                         flex-wrap: wrap;
 
                         border: 1px solid lightgrey;
+                        z-index: 100;
+
+                        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
                         .condition {
                             border: 1px solid lightgrey;
                             width: auto;
@@ -249,16 +253,55 @@
                             display: flex;
                             flex-wrap: wrap;
                             flex-direction: row;
-                            justify-content: center;
-                            align-items:flex-start;
                             position: relative;
+ /* Make sure it's on top of other elements */
                             .conditionCounterButton {
                                 width: 40px;
+                                
                             }
                         }
                         
                     }
 
+                    .Circle1 {
+                        width: 20px;
+                        height: 20px;
+                        background-color: grey;
+                        border: 1px solid #222;
+                        border-radius: 30px;
+                    }
+
+                    .Circle2 {
+                        width: 30px;
+                        height: 30px;
+                        background-color: grey;
+                        border: 1px solid #222;
+                        border-radius: 30px;
+                    }
+
+                    .Circle3 {
+                        width: 20px;
+                        height: 20px;
+                        background-color: #eee;
+                        border: 1px solid #444;
+                        border-radius: 30px;
+                    }
+
+                    .Circle4 {
+                        width: 30px;
+                        height: 30px;
+                        background-color: #eee;
+                        border: 1px solid #444;
+                        border-radius: 30px;
+                    }
+
+                    .Circle5 {
+                        width: 40px;
+                        height: 40px;
+                        background-color: #eee;
+                        border: 1px solid #444;
+                        border-radius: 30px;
+                    }
 
 
                 }
